@@ -11,7 +11,8 @@ import trubrics
 Here are predictions for my digits recognition model. What do you think?
 """
 
-test_index = st.number_input("Select a test data point", 0, len(mp.X_test) - 1)
+st.number_input("Select a test data point", 0, len(mp.X_test) - 1, key="test_index")
+test_index = st.session_state["test_index"]
 
 image = mp.X_test[test_index].reshape(8, 8)
 fig, ax = plt.subplots(figsize=(2, 2))
@@ -26,5 +27,10 @@ collector = FeedbackCollector(
     model_name=mp.model_name,
     model_version=mp.model_version,
 )
-collector._st_feedback_thumbs(unique_key=test_index)
-collector.st_feedback(unique_key=test_index)
+collector.st_feedback(type="thumbs", unique_key=f"point_{test_index}")
+
+if st.session_state[f"point_{test_index}_down"]:
+    """
+    Please explain the error below:
+    """
+    collector.st_feedback(unique_key=test_index)

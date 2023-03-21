@@ -1,4 +1,4 @@
-name: trubrics
+name: trubrics-tests
 
 dependencies:
   - python=3.11
